@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "759528034626",
+    "project_id": "scanit-2ae7e",
+    "storage_bucket": "scanit-2ae7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759528034626:android:cbd8d000669ecbde6138db",
+        "android_client_info": {
+          "package_name": "za.co.matthewbirkholtz.scanit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759528034626-bdrn3vefcn39a9799augiipirqfs720p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "za.co.matthewbirkholtz.scanit",
+            "certificate_hash": "0ebd1a8ef54e642ae1bad143af93ff2ef1609c9f"
+          }
+        },
+        {
+          "client_id": "759528034626-cs699p7f00i3hhqumjto54hj2losco26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4JBR_rtnzTSB9c2wuFTLJI3T0Ll0z-Pw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759528034626-cs699p7f00i3hhqumjto54hj2losco26.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
