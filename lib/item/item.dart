@@ -48,7 +48,7 @@ class SaveItemButton extends StatelessWidget {
   }) : super(key: key);
 
   _commitItemToDB(String barcode, String category, String name, double units,
-      String uom, double price, BuildContext context) {
+      String uom, double price, String color, BuildContext context) {
     if (barcode.isEmpty) {
       BottomSheetModel()
           .create(context, false, 'Oops. The barcode was lost.', true);
@@ -69,7 +69,8 @@ class SaveItemButton extends StatelessWidget {
           'You need to enter a price which is greater than 0.', false);
     } else {
       FirestoreService()
-          .addToSessionAndItems(barcode, category, name, units, uom, price)
+          .addToSessionAndItems(
+              barcode, category, name, units, uom, price, color)
           .then((value) {
         BottomSheetModel().create(context, true, 'Item Saved!', true);
       }).catchError((error) {
@@ -89,8 +90,17 @@ class SaveItemButton extends StatelessWidget {
         child: Icon(FontAwesomeIcons.save),
       ),
       onPressed: () {
-        _commitItemToDB(state.st_barcode, state.st_category, state.st_name,
-            state.st_units, state.st_uom, state.st_price, context);
+        _commitItemToDB(
+            state.st_barcode,
+            state.st_category,
+            state.st_name,
+            state.st_units,
+            state.st_uom,
+            state.st_price,
+            state.st_selectedcategory == null
+                ? '#FFFFFF'
+                : state.st_selectedcategory!.color,
+            context);
       },
     );
   }

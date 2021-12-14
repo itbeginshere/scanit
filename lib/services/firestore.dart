@@ -6,7 +6,6 @@ class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Get all Unit of Measures from db
-  // Once-off query since these will never change
   Stream<List<UOM>> getUnitOfMeasures() {
     CollectionReference<Map<String, dynamic>> ref =
         _db.collection('unitofmeasure');
@@ -20,7 +19,6 @@ class FirestoreService {
   }
 
   // Get all Categories from db
-  // Real-time query since new ones can be added
   Stream<List<Category>> getCategories() {
     CollectionReference<Map<String, dynamic>> ref =
         _db.collection('categories');
@@ -34,7 +32,6 @@ class FirestoreService {
   }
 
   // Get all Sessions from db
-  // Real-time query since new onces can be added and the session can be reset
   Stream<List<Session>> getSession() {
     CollectionReference<Map<String, dynamic>> ref = _db.collection('session');
 
@@ -48,7 +45,6 @@ class FirestoreService {
   }
 
   // Deletes all Sessions from db
-  // Once-off query since we are removing all the documents in the session collection
   Future<void> resetSession() {
     CollectionReference<Map<String, dynamic>> ref = _db.collection('session');
 
@@ -61,7 +57,6 @@ class FirestoreService {
     );
   }
 
-  // Get Item from Items using Barcode
   Future<Item> getItem(String barcode) async {
     Item item = Item(barcode: barcode);
 
@@ -78,11 +73,11 @@ class FirestoreService {
     return Future.value(item);
   }
 
-  // Add a new category
-  Future<void> addCategory({name: String, defaultuom: String}) {
+  Future<void> addCategory({name: String, defaultuom: String, color: String}) {
     CollectionReference categories = _db.collection('categories');
 
-    Category newCategory = Category(name: name, defaultuom: defaultuom);
+    Category newCategory =
+        Category(name: name, defaultuom: defaultuom, color: color);
     return categories.add(newCategory.toJson());
   }
 
@@ -93,8 +88,12 @@ class FirestoreService {
     return uoms.add(newUOM.toJson());
   }
 
+  // adds the item to the sessions and the item collections
+  // each collection is checked to see if the item already exists.
+  // if it does exist it is replaced with the new item details
+
   Future<void> addToSessionAndItems(String barcode, String category,
-      String name, double units, String uom, double price) async {
+      String name, double units, String uom, double price, String color) async {
     CollectionReference<Map<String, dynamic>> sessionRef =
         _db.collection('session');
 
@@ -114,12 +113,15 @@ class FirestoreService {
     }
 
     Session newSession = Session(
-        name: name,
-        barcode: barcode,
-        category: category,
-        units: units,
-        uom: uom,
-        price: price);
+      name: name,
+      barcode: barcode,
+      category: category,
+      units: units,
+      uom: uom,
+      price: price,
+      priceperoum: double.parse((price / units).toStringAsFixed(2)),
+      color: color,
+    );
 
     await sessionRef.add(newSession.toJson());
 

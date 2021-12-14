@@ -20,6 +20,8 @@ class Session {
   double price;
   double units;
   String uom;
+  double priceperoum;
+  String color;
 
   Session({
     this.barcode = '',
@@ -28,6 +30,8 @@ class Session {
     this.price = 0.0,
     this.units = 0.0,
     this.uom = '',
+    this.priceperoum = 0.0,
+    this.color = '#FFFFFF',
   });
 
   factory Session.fromJson(Map<String, dynamic> json) =>
@@ -39,31 +43,18 @@ class Session {
 class Category {
   String defaultuom;
   String name;
+  String color;
 
   Category({
     this.defaultuom = '',
     this.name = '',
+    this.color = '#FFFFFF',
   });
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }
-
-// @JsonSerializable()
-// class PriceHistory {
-//   double price;
-//   String closingdate;
-
-//   PriceHistory({
-//     this.price = 0.0,
-//     this.closingdate = '',
-//   });
-
-//   factory PriceHistory.fromJson(Map<String, dynamic> json) =>
-//       _$PriceHistoryFromJson(json);
-//   Map<String, dynamic> toJson() => _$PriceHistoryToJson(this);
-// }
 
 @JsonSerializable()
 class Item {
@@ -73,7 +64,6 @@ class Item {
   double price;
   double units;
   String uom;
-  //List<PriceHistory> pricehistories;
 
   Item({
     this.barcode = '',
@@ -87,20 +77,3 @@ class Item {
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
   Map<String, dynamic> toJson() => _$ItemToJson(this);
 }
-
-// @JsonSerializable()
-// class Retailer {
-//   String name;
-//   Map<String, String> stock;
-//   Map<String, List<Item>> storecategories;
-
-//   Retailer({
-//     this.name = '',
-//     this.stock = const {},
-//     this.storecategories = const {},
-//   });
-
-//   factory Retailer.fromJson(Map<String, dynamic> json) =>
-//       _$RetailerFromJson(json);
-//   Map<String, dynamic> toJson() => _$RetailerToJson(this);
-// }

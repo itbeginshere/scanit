@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:scanit/category/add_category_state.dart';
@@ -42,7 +43,7 @@ class AddCategoryButton extends StatelessWidget {
   }) : super(key: key);
 
   _addCategory(String name, String defaultOum, List<Category> categories,
-      BuildContext context) {
+      Color color, BuildContext context) {
     name = name.trim();
 
     if (name.isEmpty) {
@@ -63,8 +64,10 @@ class AddCategoryButton extends StatelessWidget {
       BottomSheetModel().create(context, false,
           'A category cannot have the name "New Categroy".', false);
     } else {
+      String hexColor = '#' + color.value.toRadixString(16).substring(2);
+
       FirestoreService()
-          .addCategory(name: name, defaultuom: defaultOum)
+          .addCategory(name: name, defaultuom: defaultOum, color: hexColor)
           .then((value) {
         BottomSheetModel()
             .create(context, true, 'Category successfully added!', false, 2);
@@ -85,7 +88,8 @@ class AddCategoryButton extends StatelessWidget {
         child: Icon(FontAwesomeIcons.save),
       ),
       onPressed: () {
-        _addCategory(state.name, state.defaultoum, categories, context);
+        _addCategory(state.name, state.defaultoum, categories,
+            state.selectedcolor, context);
       },
     );
   }
@@ -98,6 +102,33 @@ class AddCategoryForm extends StatelessWidget {
   const AddCategoryForm(
       {Key? key, required this.uoms, required this.categories})
       : super(key: key);
+
+  void _pickColor(BuildContext context, AddCategoryState state) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Pick a Color'),
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ColorPicker(
+                  pickerColor: state.selectedcolor,
+                  enableAlpha: false,
+                  labelTypes: [],
+                  onColorChanged: (color) => {state.selectedcolor = color}),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('SELECT', style: TextStyle(fontSize: 20)),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +164,38 @@ class AddCategoryForm extends StatelessWidget {
               state.defaultoum = uom!.value;
               state.selecteduom = uom;
             },
+          ),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: state.selectedcolor,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    child: RaisedButton(
+                      onPressed: () {
+                        _pickColor(context, state);
+                      },
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      shape: CircleBorder(side: BorderSide.none),
+                      child: Icon(FontAwesomeIcons.palette),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),

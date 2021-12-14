@@ -21,6 +21,8 @@ Session _$SessionFromJson(Map<String, dynamic> json) => Session(
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       units: (json['units'] as num?)?.toDouble() ?? 0.0,
       uom: json['uom'] as String? ?? '',
+      priceperoum: (json['priceperoum'] as num?)?.toDouble() ?? 0.0,
+      color: json['color'] as String? ?? '#FFFFFF',
     );
 
 Map<String, dynamic> _$SessionToJson(Session instance) => <String, dynamic>{
@@ -30,16 +32,20 @@ Map<String, dynamic> _$SessionToJson(Session instance) => <String, dynamic>{
       'price': instance.price,
       'units': instance.units,
       'uom': instance.uom,
+      'priceperoum': instance.priceperoum,
+      'color': instance.color,
     };
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       defaultuom: json['defaultuom'] as String? ?? '',
       name: json['name'] as String? ?? '',
+      color: json['color'] as String? ?? '#FFFFFF',
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'defaultuom': instance.defaultuom,
       'name': instance.name,
+      'color': instance.color,
     };
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(

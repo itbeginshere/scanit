@@ -51,7 +51,7 @@ class _AppState extends State<App> {
             create: (_) => FirestoreService().getSession(),
             initialData: [],
             child: MaterialApp(
-              debugShowCheckedModeBanner: true,
+              debugShowCheckedModeBanner: false,
               routes: appRoutes,
               theme: appTheme,
             ),
