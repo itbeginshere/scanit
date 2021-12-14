@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:scanit/item/item.dart';
 import 'package:scanit/services/bottom_sheet.dart';
 import 'package:scanit/services/firestore.dart';
-import 'package:scanit/services/models.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -12,7 +10,6 @@ class BottomNavBar extends StatelessWidget {
 
   Future<void> scanBarcodeNormal(BuildContext context) async {
     String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);

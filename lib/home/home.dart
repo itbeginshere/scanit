@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -76,9 +75,6 @@ class HomeScreen extends StatelessWidget {
         cheapestIndex = k;
       }
     }
-
-    print('index: $cheapestIndex, Value: $cheapestValue');
-    print('index: $luxuriousIndex, Value: $luxuriousValue');
 
     return Scaffold(
       appBar: AppBar(
@@ -215,7 +211,7 @@ class HomeScreen extends StatelessWidget {
                           false),
                     );
               },
-              label: 'Reset List',
+              label: 'Reset',
               labelStyle: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
